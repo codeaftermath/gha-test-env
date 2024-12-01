@@ -20,6 +20,7 @@ jobs:
       - run:
           name: Publish
           command: |
+            docker login
             docker push ${DOCKER_USERNAME}/simple-node-circleci
 workflows:
   build_publish_deploy:
