@@ -4,8 +4,13 @@ jobs:
   build_and_publish: 
     docker:
     - image: cimg/base:2024.11
+      auth:
+        username: $DOCKER_USERNAME
+        password: $DOCKER_PASSWORD
     steps:
       - checkout # checkout source code
+      - setup_remote_docker:
+        docker_layer_caching: true # needed to run dind
       - run:
           name: Build
           command: docker build . -t simple-node-circleci
@@ -15,7 +20,6 @@ jobs:
       - run:
           name: Publish
           command: |
-            docker login -u "${DOCKER_USERNAME}" -p ${DOCKER_PASSWORD}
             docker push ${DOCKER_USERNAME}/simple-node-gha
 workflows:
   build_publish_deploy:
