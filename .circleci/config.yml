@@ -1,0 +1,13 @@
+version: 2.1
+
+jobs:
+  build_and_publish: 
+    steps:
+      - checkout # checkout source code
+      - run:
+          name: Build image
+          command: docker build . -t simple-node-circleci
+workflows:
+  build_publish_deploy:
+    jobs:
+      - build_and_publish
