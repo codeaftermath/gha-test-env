@@ -10,7 +10,7 @@ jobs:
     steps:
       - checkout # checkout source code
       - setup_remote_docker:
-        docker_layer_caching: true # needed to run dind
+          docker_layer_caching: true # needed to run dind
       - run:
           name: Build
           command: docker build . -t simple-node-circleci
