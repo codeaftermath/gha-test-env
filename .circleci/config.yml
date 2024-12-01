@@ -16,12 +16,12 @@ jobs:
           command: docker build . -t simple-node-circleci
       - run:
           name: Tag
-          command: docker tag simple-node-circleci ${DOCKER_USERNAME}/simple-node-circleci
+          command: docker tag simple-node-circleci "$DOCKER_USERNAME"/simple-node-circleci
       - run:
           name: Publish
           command: |
             docker login
-            docker push ${DOCKER_USERNAME}/simple-node-circleci
+            docker push "$DOCKER_USERNAME"/simple-node-circleci
 workflows:
   build_publish_deploy:
     jobs:
