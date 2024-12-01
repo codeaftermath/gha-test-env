@@ -1,0 +1,23 @@
+# Simple GHA Work flow
+
+on:
+  push:
+    branches:
+    - main
+    
+jobs:
+  build-docker:
+    name: Build and Publish a Docker image
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Build
+      run: docker build . -t simple-node-gha
+
+    - name: Tag
+      run: docker tag simple-node-gha ${DOCKER_USERNAME}/simple-node-gha:latest
+
+    - name: Publish
+      run: |
+        echo "$DOCKER_PASSWORD" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+        docker push ${DOCKER_USERNAME}/simple-node-gha
