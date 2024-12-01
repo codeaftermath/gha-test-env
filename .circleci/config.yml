@@ -3,12 +3,20 @@ version: 2.1
 jobs:
   build_and_publish: 
     docker:
-    - image: docker:latest 
+    - image: cimg/base:2024.11
     steps:
       - checkout # checkout source code
       - run:
-          name: Build image
+          name: Build
           command: docker build . -t simple-node-circleci
+      - run:
+          name: Tag
+          command: docker tag simple-node-circleci ${DOCKER_USERNAME}/simple-node-circleci
+      - run:
+          name: Publish
+          command: |
+            docker login -u "${DOCKER_USERNAME}" -p ${DOCKER_PASSWORD}
+            docker push ${DOCKER_USERNAME}/simple-node-gha
 workflows:
   build_publish_deploy:
     jobs:
